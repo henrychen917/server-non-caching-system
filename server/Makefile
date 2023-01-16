@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -I.
-OBJ = main.o palloc.o hash.o bst.o request.o disk.o cJSON.o
+CFLAGS = -g -I.
+OBJ = main.o palloc.o request.o disk.o cJSON.o
 
 EXECUTABLE := server.out
 all: $(EXECUTABLE)

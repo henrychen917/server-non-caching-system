@@ -3,11 +3,12 @@
 
 
 //thread
-void *clientHandler(threadArgs_t *args){
+void* clientHandler(void *_args){
+	threadArgs_t *args = (threadArgs_t*)_args;
 	char buf[BUFSIZ];
 	int len;
 	int new_sockfd = args->new_sockfd;
-	node_t *root = args->root;
+
 	pool_t *pool = args->pool;
 	struct sockaddr_in clnt = args->clnt;
 
@@ -25,12 +26,11 @@ void *clientHandler(threadArgs_t *args){
 			send(new_sockfd, "Client exited", 200, 0);
 			break;
 		}
-		char *response = processRequest(buf, root, pool);
+		char *response = processRequest(buf, pool);
 		printf("Response: %s\n", response);
 		send(new_sockfd, response, 200, 0);
 
 	}
-	diskSaveAll(root);
 	close(new_sockfd);
 
 
@@ -44,9 +44,8 @@ void *clientHandler(threadArgs_t *args){
 
 
 int main (int argc, char *argv[]){
-	pool_t *pool = pool_init(default_size);
-	node_t *root = diskInit(pool);
 	int sockfd, len, new_sockfd;
+	pool_t *pool = pool_init(default_size);	
 	char buf[BUFSIZ];
 	char message[BUFSIZ];
 	struct sockaddr_in serv, clnt;
@@ -55,6 +54,8 @@ int main (int argc, char *argv[]){
 	threadArgs_t *args = pool_alloc(sizeof(threadArgs_t), pool);
 	pthread_t threads[100];
 	int thread_count = 0;
+
+
 
 
 
@@ -96,15 +97,13 @@ int main (int argc, char *argv[]){
 			perror("accept");
 		}
 		args->new_sockfd = new_sockfd;
-		args->root = root;
-		args->pool = pool;
 		args->clnt = clnt;
+		args->pool = pool;
 		pthread_create(&threads[thread_count], NULL, clientHandler, args);
 		thread_count++;
 
 	}
 	close (sockfd);
-	diskSaveAll(root);
 	return 0;
 }
 

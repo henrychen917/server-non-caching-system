@@ -41,7 +41,7 @@ void* pool_alloc(size_t size, pool_t *pool){
 
     if(p){
         m = p->last;
-        if ((size_t) (p->end - m) >= size) {
+        if ((size_t) (p->end - m) > size) {
             p->last = m + size;
 
             return m;

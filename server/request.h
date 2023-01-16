@@ -1,7 +1,7 @@
 #ifndef request_h
 #define request_h
 
-#include <bst.h>
+#include <cJSON.h>
 #include <palloc.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include <unistd.h>
 
-char *processRequest(char *request, node_t *root, pool_t *pool);
+char *processRequest(char *request, pool_t *pool);
 
 
 

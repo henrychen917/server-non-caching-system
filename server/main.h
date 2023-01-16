@@ -1,8 +1,7 @@
 #ifndef main_h
 #define main_h
 
-#include <bst.h>
-#include <hash.h>
+
 #include <palloc.h>
 #include <cJSON.h>
 #include <request.h>
@@ -25,7 +24,7 @@ typedef struct threadArgs_s threadArgs_t;
 
 struct threadArgs_s {
 	int new_sockfd;
-	node_t *root;
+
 	pool_t *pool;
 	struct sockaddr_in clnt;
 };
