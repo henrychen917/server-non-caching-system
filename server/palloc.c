@@ -1,4 +1,5 @@
 #include <palloc.h>
+#include <string.h>
 /*
 
 typedef struct test_s test;
@@ -17,6 +18,7 @@ pool_t* pool_init(size_t size){
     pool_t  *p;
 
     p = malloc(size);
+    memset(p, 0, size);
     if (p == NULL) {
         return NULL;
     }

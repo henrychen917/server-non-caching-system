@@ -79,7 +79,8 @@ int main (int argc, char *argv[]){
 		inet_aton(DEFAULT_ADDR, &serv.sin_addr);
 	}
 
-
+    int optval = 1;
+    setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 
 	sin_siz = sizeof(struct sockaddr_in);
 	if (bind(sockfd, (struct sockaddr*)&serv, sizeof(serv)) < 0) {
