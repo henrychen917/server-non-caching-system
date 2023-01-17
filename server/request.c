@@ -18,8 +18,8 @@ char *processRequest(char *request, pool_t *pool){
             break;
         }
         strcpy(key, tempkey);
-        printf("%s", key);
-        json_item = cJSON_GetObjectItemCaseSensitive(json_root, "aaa");
+        //printf("%s", key);
+        json_item = cJSON_GetObjectItemCaseSensitive(json_root, key);
         if (strcmp(requestType, "GET") == 0) {
             if (json_item != NULL) {
                 sprintf(response, "Node found with key: %s val: %s\n", json_item->string, json_item->valuestring);
@@ -42,7 +42,7 @@ char *processRequest(char *request, pool_t *pool){
             }
 
             cJSON_AddItemToObject(json_root, key, cJSON_CreateString(val));
-        	sprintf(response, "Error adding node with key: %s and value: %s\n", key, val);
+            sprintf(response, "Node added with key: %s and value: %s\n", key, val);
             break;
 
         } else if (strcmp(requestType, "DEL") == 0) {

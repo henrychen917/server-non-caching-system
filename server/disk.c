@@ -47,7 +47,7 @@ cJSON* diskInit(){
     //parse text to cJSON data structure
 
     cJSON *json_root = NULL;
-    printf("1");
+
     json_root = cJSON_Parse(data);
 
     //inorder(root);

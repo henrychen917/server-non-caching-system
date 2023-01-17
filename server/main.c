@@ -4,6 +4,7 @@
 
 //thread
 void* clientHandler(void *_args){
+	time_t start, stop;	
 	threadArgs_t *args = (threadArgs_t*)_args;
 	char buf[BUFSIZ];
 	int len;
@@ -21,6 +22,7 @@ void* clientHandler(void *_args){
 		buf[len] = '\0';
 		buf[strcspn(buf, "\n")] = 0;
 		printf("\nReceived: %s\n", buf);
+		start = time(NULL);
 		if (strncasecmp(buf, "exit", 4) == 0){
 			printf("Client exited\n");
 			send(new_sockfd, "Client exited", 200, 0);
@@ -29,7 +31,8 @@ void* clientHandler(void *_args){
 		char *response = processRequest(buf, pool);
 		printf("Response: %s\n", response);
 		send(new_sockfd, response, 200, 0);
-
+		stop = time(NULL);
+		printf("Time taken: %f\n", stop - start);
 	}
 	close(new_sockfd);
 
