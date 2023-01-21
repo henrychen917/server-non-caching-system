@@ -4,7 +4,22 @@
 
 //thread
 void* clientHandler(void *_args){
+	// int reqCount30 = 100073;
+	// int reqCount60 = 100073;
+	// int reqCount90 = 74876;
+	// int reqCount120 = 74876;
+	// int reqCount150 = 74876;
+	// int reqCount180 = 74876;
+	// int reqCount210 = 74876;
+	int reqCount30 = 0;
+	int reqCount60 = 0;
+	int reqCount90 = 0;
+	int reqCount120 = 0;
+	int reqCount150 = 0;
+	int reqCount180 = 0;
+	int reqCount210 = 0;
 	time_t start, stop;	
+	start = time(NULL);
 	threadArgs_t *args = (threadArgs_t*)_args;
 	char buf[BUFSIZ];
 	int len;
@@ -22,7 +37,7 @@ void* clientHandler(void *_args){
 		buf[len] = '\0';
 		buf[strcspn(buf, "\n")] = 0;
 		printf("\nReceived: %s\n", buf);
-		start = time(NULL);
+
 		if (strncasecmp(buf, "exit", 4) == 0){
 			printf("Client exited\n");
 			send(new_sockfd, "Client exited", 200, 0);
@@ -32,8 +47,40 @@ void* clientHandler(void *_args){
 		printf("Response: %s\n", response);
 		send(new_sockfd, response, 200, 0);
 		stop = time(NULL);
-		printf("Time taken: %f\n", stop - start);
+
+
+		if (stop - start >= 210){
+			break;
+		}
+		reqCount210++;
+		if (stop - start <= 90){
+			reqCount90++;
+		}
+		if (stop - start <= 60){
+			reqCount60++;
+		}
+		if (stop - start <= 30){
+			reqCount30++;
+		}
+		if (stop - start <= 150){
+			reqCount150++;
+		}
+		if (stop - start <= 180){
+			reqCount180++;
+		}
+		if (stop - start <= 120){
+			reqCount120++;
+		}
 	}
+	stop = time(NULL);
+	printf("30 Request count: %d\n", reqCount30);
+	printf("60 Request count: %d\n", reqCount60);
+	printf("90 Request count: %d\n", reqCount90);
+	printf("120 Request count: %d\n", reqCount120);
+	printf("150 Request count: %d\n", reqCount150);
+	printf("180 Request count: %d\n", reqCount180);
+	printf("210 Request count: %d\n", reqCount210);
+	printf("Time: %ld\n", stop - start);
 	close(new_sockfd);
 
 

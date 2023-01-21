@@ -59,7 +59,7 @@ char *processRequest(char *request, pool_t *pool){
 
 
     diskSaveAll(json_root);
-
+    //cJSON_Delete(json_root);
     fprintf(stderr, "%p\n", response);
 
     return response;

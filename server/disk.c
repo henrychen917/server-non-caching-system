@@ -11,7 +11,7 @@ void diskSaveAll(cJSON *json_root){
     if (json_root!=NULL){
         out = cJSON_Print(json_root);
         fprintf(fptr,"%s",out);
-        printf("%s\n",out);
+        //printf("%s\n",out);
     }
     cJSON_Delete(json_root);
     free(out);

@@ -1,5 +1,5 @@
 #include <palloc.h>
-#include <string.h>
+
 /*
 
 typedef struct test_s test;
@@ -49,7 +49,7 @@ void* pool_alloc(size_t size, pool_t *pool){
             return m;
         }
     }
-    //p = pool;
+    p = pool;
     np = pool_init(default_size);
     while (1){
         p->current = np;
